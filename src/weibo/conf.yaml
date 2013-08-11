@@ -1,0 +1,13 @@
+max_search_page: 5 #默认抓取50页
+max_thread: 1 #暂时一个线程
+thread_life: 1000 #线程生存时间
+database: weibo_search #mysql数据库信息
+host: localhost
+port: 3306
+user: root
+pwd: tester
+pref: ws #表前缀
+node:
+    user: xuexu@adobe.com #用户名
+    pwd: tester #密码
+    cookie: cookie.dat #cookie
