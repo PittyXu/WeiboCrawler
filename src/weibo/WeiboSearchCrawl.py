@@ -145,6 +145,7 @@ class CrawlThread(threading.Thread):
             maxP = self.maxPage
             if self.k_id == 0:    
                 sub, self.k_id, keys = service.insert_keyword([self.kw, ana.get_weibo_totalshow()]);
+            print self.kw, '比上次新增加:', sub, '条记录, 新关键字id:', self.k_id
             maxP = int((sub + 19) / 20)
             if maxP > 50:
                 maxP = 50

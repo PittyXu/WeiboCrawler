@@ -126,6 +126,7 @@ class WeiboSearchService:
     
     def insert_weibos(self, values=[]):
         if len(values) > 0:
+            print values
             print self.cur.executemany("""INSERT INTO """ + self.weiboT + """ (
                 `id`, `k_id`, `userName`, `weibo`, `approve`, `reply`, `retweet`, `favorite`, 
                 `pushDate`, `getDate`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s), CURRENT_TIMESTAMP)""", values)

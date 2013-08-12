@@ -86,6 +86,8 @@ class WeiboLogin:
         """
         url = urllib2.urlopen('http://account.weibo.com').geturl()
         print url
+        if "login" in url:
+            return False
         if len(url) > 24:
             return True
         print "Login faile! 请确认您登入不需要验证码"
