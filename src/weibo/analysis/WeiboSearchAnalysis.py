@@ -18,16 +18,16 @@ class Analysis:
     
     def __init__(self, page):
         self.dic = {}
-        self.flag = True
+        self.flag = False
         lines = page.splitlines()
         for line in lines:  
             if line.startswith('<script>STK && STK.pageletM && STK.pageletM.view('):  
                 tJson = json.loads(line[49:-10])
                 self.dic.update({tJson['pid']: tJson['html']})
-        if self.dic['pl_common_sassfilter']:
+        if self.dic.has_key('pl_common_sassfilter'):
             self.flag = False
-        elif self.dic['pl_weibo_feedlist']:
-            self.flag = False
+        elif self.dic.has_key('pl_weibo_feedlist'):
+            self.flag = True
         #pl_common_searchTop 上方搜索条
         #plc_main 搜索 综合 实时 热门 选择
         #pl_weibo_prepareData 为空

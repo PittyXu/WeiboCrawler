@@ -173,7 +173,7 @@ class CrawlThread(threading.Thread):
 
             while 0 < page:        
                 try:
-                    #time.sleep(random.uniform(12, 22))
+                    time.sleep(random.uniform(12, 22))
                     print self.url + '&page=' + page.__str__()
                     htmlContent = urllib2.urlopen(self.url + '&page=' + page.__str__()).read()
                     ana = Analysis.Analysis(htmlContent)
