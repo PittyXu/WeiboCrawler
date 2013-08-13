@@ -9,9 +9,7 @@ Created on Jul 15, 2013
 import util.WeiboSearchService as Service
 if __name__ == '__main__':  
     ser = Service.WeiboSearchService()
-    sub, a, b =  ser.insert_keyword(['你好', '1077899386'])
-    maxP = int((sub + 19) / 20)
-    print maxP
+    ser.insert_keyword(['3', '107799386'])
     #print ser.insert_keyword(['你好', '177899386'])
     #print ser.insert_keyword(['你好', '343498761'])
     

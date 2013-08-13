@@ -90,8 +90,12 @@ class WeiboSearchService:
                 self.cur.execute("""INSERT INTO """ + self.keywordsT + """ (
                     `id`, `keyword`, `result`, `date`) VALUES (
                     NULL, %s, %s, CURRENT_TIMESTAMP);""", values)
+                #print self.cur.lastrowid
+                #print self.conn.insert_id()
                 self.commit()
-                return sub, self.conn.insert_id(), res
+                #print self.conn.insert_id()
+                #print self.cur.lastrowid
+                return sub, int(self.cur.lastrowid), res
             return sub, 0, None
         return 0, 0, None
             #print self.cur.lastrowid
@@ -126,7 +130,7 @@ class WeiboSearchService:
     
     def insert_weibos(self, values=[]):
         if len(values) > 0:
-            print values
+            #print values
             print self.cur.executemany("""INSERT INTO """ + self.weiboT + """ (
                 `id`, `k_id`, `userName`, `weibo`, `approve`, `reply`, `retweet`, `favorite`, 
                 `pushDate`, `getDate`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s), CURRENT_TIMESTAMP)""", values)

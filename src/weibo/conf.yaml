@@ -1,4 +1,4 @@
-max_search_page: 5 #默认抓取50页
+max_search_page: 2 #默认抓取50页
 max_thread: 1 #暂时一个线程
 thread_life: 1000 #线程生存时间
 database: weibo_search #mysql数据库信息
