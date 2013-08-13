@@ -112,8 +112,8 @@ class CrawlThread(threading.Thread):
         keyword = keyword.decode(sys.stdin.encoding).encode("utf-8")
         return urllib.quote(urllib.quote(keyword))
     
-    def insert_weibos(self, htmlContent, service, k_id):
-        ana = Analysis.Analysis(htmlContent)
+    def insert_weibos(self, ana, service, k_id):
+        #ana = Analysis.Analysis(htmlContent)
         #last = service.get_last_by_kids(k_ids)
         #print last
         weibo_info = ana.get_weibo_feedlist()
@@ -140,6 +140,13 @@ class CrawlThread(threading.Thread):
             print self.url # + '&page=' + page.__str__()
             htmlContent = urllib2.urlopen(self.url).read()
             ana = Analysis.Analysis(htmlContent)
+            while not ana.flag:
+                com = raw_input('出现验证码,请确认已经手动输入过验证码(y):')
+                if com == 'y':
+                    htmlContent = urllib2.urlopen(self.url).read()
+                    ana = Analysis.Analysis(htmlContent)
+                else:
+                    continue
             sub = 0
             #keys = None
             maxP = self.maxPage
@@ -166,10 +173,17 @@ class CrawlThread(threading.Thread):
 
             while 0 < page:        
                 try:
-                    time.sleep(random.uniform(12, 22))
+                    #time.sleep(random.uniform(12, 22))
                     print self.url + '&page=' + page.__str__()
                     htmlContent = urllib2.urlopen(self.url + '&page=' + page.__str__()).read()
-                    #ana = Analysis.Analysis(htmlContent)
+                    ana = Analysis.Analysis(htmlContent)
+                    while not ana.flag:
+                        com = raw_input('出现验证码,请确认已经手动输入过验证码(y):')
+                        if com == 'y':
+                            htmlContent = urllib2.urlopen(self.url + '&page=' + page.__str__()).read()
+                            ana = Analysis.Analysis(htmlContent)
+                        else:
+                            continue
                     self.insert_weibos(htmlContent, service, self.k_id)
                     page -= 1
                 except:

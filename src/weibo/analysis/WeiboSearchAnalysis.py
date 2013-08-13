@@ -18,11 +18,16 @@ class Analysis:
     
     def __init__(self, page):
         self.dic = {}
+        self.flag = True
         lines = page.splitlines()
         for line in lines:  
             if line.startswith('<script>STK && STK.pageletM && STK.pageletM.view('):  
                 tJson = json.loads(line[49:-10])
                 self.dic.update({tJson['pid']: tJson['html']})
+        if self.dic['pl_common_sassfilter']:
+            self.flag = False
+        elif self.dic['pl_weibo_feedlist']:
+            self.flag = False
         #pl_common_searchTop 上方搜索条
         #plc_main 搜索 综合 实时 热门 选择
         #pl_weibo_prepareData 为空
@@ -39,6 +44,7 @@ class Analysis:
         #pl_common_bottomInput 下方搜索条
         #pl_common_searchHistory 为空
         #pl_common_base 为空
+        #pl_common_sassfilter 验证码拦截
 #         print self.dic['pl_weibo_feedlist']
     def get_weibo_totalshow(self):
         text = self.dic['pl_common_totalshow']
@@ -47,6 +53,9 @@ class Analysis:
         #doc = etree.HTML(self.dic['pl_common_totalshow'].decode('utf-8'))
         #text = doc.xpath("//*[@class='W_textc']")
         #return filter(str.isdigit, text[0].text.__str__())
+    
+    def set_flag(self, flag):
+        self.flag = flag
     
     def get_weibo_feedlist(self):
         doc = etree.HTML(self.dic['pl_weibo_feedlist'].decode('utf-8'))
