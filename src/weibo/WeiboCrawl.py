@@ -3,7 +3,7 @@
 '''
 Created on Jul 15, 2013
 
-@author: labuser
+@author: pitty <pitty.xu@gmail.com>
 '''
 try:
     import os

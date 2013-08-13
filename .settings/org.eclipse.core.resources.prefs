@@ -1,9 +1,9 @@
 eclipse.preferences.version=1
-encoding//src/weibo/Main.py=utf8
-encoding//src/weibo/Test.py=utf8
+encoding//src/Main.py=utf8
+encoding//src/Test.py=utf8
+encoding//src/config/conf.yaml=UTF-8
+encoding//src/config/keywords.yaml=UTF-8
 encoding//src/weibo/WeiboCrawl.py=utf8
 encoding//src/weibo/WeiboSearchCrawl.py=utf8
 encoding//src/weibo/analysis/WeiboSearchAnalysis.py=utf8
-encoding//src/weibo/conf.yaml=UTF-8
-encoding//src/weibo/keywords.yaml=UTF-8
 encoding//src/weibo/util/WeiboSearchService.py=utf8

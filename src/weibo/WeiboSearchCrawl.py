@@ -3,9 +3,8 @@
 '''
 Created on Jul 15, 2013
 
-@author: labuser
+@author: pitty <pitty.xu@gmail.com>
 '''
-from compiler.ast import Sub
 try:
     import os
     import sys
@@ -184,9 +183,10 @@ class CrawlThread(threading.Thread):
                             ana = Analysis.Analysis(htmlContent)
                         else:
                             continue
-                    self.insert_weibos(htmlContent, service, self.k_id)
+                    self.insert_weibos(ana, service, self.k_id)
                     page -= 1
-                except:
+                except Exception, e:
+                    print e
                     self.thLock.acquire()  
                     service.commit()
                     failedKw.append(self.kw + page.__str__())  
@@ -195,8 +195,8 @@ class CrawlThread(threading.Thread):
                 self.thLock.acquire()   
                 service.commit()
                 self.thLock.release()
-        except:
-            print 'Init Error:' + self.kw + ' not begin.'
+        except Exception, e:
+            print 'Init Error:', e + self.kw + ' not begin.'
             self.thLock.acquire() 
             service.commit() 
             failedKw.append(self.kw)  

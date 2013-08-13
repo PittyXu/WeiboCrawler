@@ -3,16 +3,16 @@
 '''
 Created on Jul 15, 2013
 
-@author: labuser
+@author: pitty <pitty.xu@gmail.com>
 '''
-import WeiboCrawl  
-import WeiboSearchCrawl
+import weibo.WeiboCrawl as WeiboCrawl  
+import weibo.WeiboSearchCrawl as WeiboSearchCrawl
 import yaml
 
 if __name__ == '__main__':  
-    cfg = open("conf.yaml")
+    cfg = open("config/conf.yaml")
     cfg = yaml.load(cfg)
-    kw = open('keywords.yaml')
+    kw = open('config/keywords.yaml')
     kw = yaml.load(kw)
     weiboLogin = WeiboCrawl.WeiboLogin(cfg['node']['user'], cfg['node']['pwd'], cfg['node']['cookie'])  
     if weiboLogin.login() == True:  
