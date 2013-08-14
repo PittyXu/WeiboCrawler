@@ -3,7 +3,7 @@
 '''
 Created on Aug 4, 2013
 
-@author: xuexu <xuexu@adobe.com>
+@author: pitty <pitty.xu@gmail.com>
 '''
 try:
     import sys 
