@@ -19,7 +19,7 @@ if __name__ == '__main__':
         print "Login Success!", cfg['node']['user'] 
         webCrawl = WeiboSearchCrawl.WebCrawl(kw, maxSearchPage=cfg['max_search_page'], 
                 maxThreadNum=cfg['max_thread'], database=cfg['database'], host=cfg['host'], 
-                port=cfg['port'], user=cfg['user'], pwd=cfg['pwd'], pref=cfg['pref'])  
+                port=cfg['port'], user=cfg['user'], pwd=cfg['pwd'], pref=cfg['pref'], sleepTime=cfg['sleep_time'])
         webCrawl.Crawl()  
         del webCrawl 
     else:

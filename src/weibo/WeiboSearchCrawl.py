@@ -47,7 +47,7 @@ class WebCrawl:
   
     def __init__(self, keyWords, searchUrl = "http://s.weibo.com", maxSearchPage = 50, maxThreadNum = 1,
                   thLifetime = 1000, database = 'weibo_search', host='localhost', 
-                  port=3306, user='root', pwd='tester', pref='ws'):  
+                  port=3306, user='root', pwd='tester', pref='ws', sleepTime = 1):
         "Initialize the class WebCrawl"  
         global toTryKw
         global service
@@ -63,7 +63,8 @@ class WebCrawl:
         self.maxThreadNum = maxThreadNum  
         self.maxSearchPage = maxSearchPage
         self.thLifetime = thLifetime
-        self.threadPool = []  
+        self.threadPool = []
+        self.sleepTime = sleepTime
   
     def Crawl(self):  
         """
@@ -76,7 +77,7 @@ class WebCrawl:
             iThread = 0  
             while iThread < self.maxThreadNum and iDownloaded + iThread < len(toTryKw):  
                 iCurrentUrl = iDownloaded + iThread  
-                self.DownloadUrl(toTryKw[iCurrentUrl], self.maxSearchPage)
+                self.DownloadUrl(toTryKw[iCurrentUrl], self.maxSearchPage, self.sleepTime)
                 iThread += 1  
                   
             iDownloaded += iThread  
@@ -89,23 +90,24 @@ class WebCrawl:
         toTryKw = [] 
         service.close()
   
-    def DownloadUrl(self, keyword, pageNum = 50):  
+    def DownloadUrl(self, keyword, pageNum = 50, sleepTime = 1):
         "Download a single url and save"  
-        cTh = CrawlThread(keyword, pageNum, self.searchUrl)  
+        cTh = CrawlThread(keyword, pageNum, self.searchUrl, sleepTime)
         self.threadPool.append(cTh)  
         cTh.start()  
   
 class CrawlThread(threading.Thread):  
     "抓取线程"  
     thLock = threading.Lock()  
-    def __init__(self, keyword, pageNum = 50, url = 'http://s.weibo.com'):  
+    def __init__(self, keyword, pageNum = 50, url = 'http://s.weibo.com', sleep_time = 1):
         "Initialize the CrawlThread"  
         threading.Thread.__init__(self)
         self.k_id = 0
         self.maxPage = pageNum 
         self.kw = keyword
         self.keyword = self.encode_url(keyword)
-        self.url = url + '/weibo/' + self.keyword  
+        self.url = url + '/weibo/' + self.keyword
+        self.sleep_time = sleep_time
   
     def encode_url(self, keyword):
         keyword = keyword.decode(sys.stdin.encoding).encode("utf-8")
@@ -124,7 +126,7 @@ class CrawlThread(threading.Thread):
         if len(values):
             service.insert_weibos(values)
                 
-    def run(self):  
+    def run(self):
         "rewrite the run() function"
         global service
         global failedKw  
@@ -172,7 +174,7 @@ class CrawlThread(threading.Thread):
 
             while 0 < page:        
                 try:
-                    time.sleep(random.uniform(12, 22))
+                    time.sleep(random.uniform(self.sleep_time, self.sleep_time * 2))
                     print self.url + '&page=' + page.__str__()
                     htmlContent = urllib2.urlopen(self.url + '&page=' + page.__str__()).read()
                     ana = Analysis.Analysis(htmlContent)
@@ -200,4 +202,4 @@ class CrawlThread(threading.Thread):
             self.thLock.acquire() 
             service.commit() 
             failedKw.append(self.kw)  
-            self.thLock.release() 
+            self.thLock.release()
