@@ -1,5 +1,6 @@
-max_search_page: 5 #默认抓取50页
+max_search_page: 50 #默认抓取50页
 max_thread: 1 #暂时一个线程
+sleep_time: 3 #秒,线程等待时间，会使爬取速度变慢，如果出现验证码比较频繁请加大
 thread_life: 1000 #线程生存时间
 database: weibo_search #mysql数据库信息
 host: localhost
